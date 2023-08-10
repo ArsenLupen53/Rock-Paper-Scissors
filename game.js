@@ -1,3 +1,10 @@
+const rockbut = document.getElementById("rock");
+const paperbut = document.getElementById("paper");
+const scissorsbut = document.getElementById("scissors");
+const result = document.getElementById("resultdiv");
+const score = document.getElementById("scorediv");
+
+
 function getComputerChoice() {
     const choices = ["rock", "paper", "scissors"];
     const randomIndex = Math.floor(Math.random() * 3);
@@ -16,10 +23,10 @@ function determineWinner(userChoice, computerChoice) {
     } else {
         return "Computer wins!";
     }
-    }
+}
 
-function playRound() {
-    const userChoice = prompt("Choose rock, paper, or scissors:").toLowerCase();
+function playRound(userChoice) {
+
     if (userChoice !== "rock" && userChoice !== "paper" && userChoice !== "scissors") {
         alert("Invalid choice. Please choose rock, paper, or scissors.");
         return;
@@ -29,45 +36,25 @@ function playRound() {
     alert(`Computer chose: ${computerChoice}`);
 
     const result = determineWinner(userChoice, computerChoice);
-    alert(result);
-    return result;
+
+    resultdiv.textContent = `Computer chose : ${computerChoice}. ${result}`;
+
+    scorediv.textContent = `Score : You ${userScore} - Computer ${computerScore}`;
+
+    if (userScore === 5) {
+        resultdiv.textContent = "You win the game";
     }
+    else if (computerScore === 5 ) {
+        resultdiv.textContent = "Computer win the game";
+    }
+
+}
 
 
 // Run the game
-function playGame() {
-    let userScore = 0;
-    let computerScore = 0;
-
-    for (let round = 1; round <= 5; round++) {
-        alert(`Round ${round}`);
-        const result = playRound();
-
-        if (result === "You win!") {
-        userScore++;
-        } else if (result === "Computer wins!") {
-        computerScore++;
-        }
-    }
-
-    // Determine the overall winner
-    let winnerMessage;
-    if (userScore > computerScore) {
-        winnerMessage = "You win the game!";
-    } else if (userScore < computerScore) {
-        winnerMessage = "Computer wins the game!";
-    } else {
-        winnerMessage = "It's a tie!";
-    }
-
-    alert(`
-        Game over!\n
-        Final Score:\n
-        You: ${userScore}\n
-        Computer: ${computerScore}\n
-        ${winnerMessage}
-    `);
-    }
+rockbut.addEventListener("click", function () { playRound("rock")});
+paperbut.addEventListener("click", function () { playRound("paper")});
+scissorsbut.addEventListener("click", function() { playRound("scissors") });
 
 // Run the game
 playGame();
